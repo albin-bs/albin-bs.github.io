@@ -1,4 +1,4 @@
-# 👋 Welcome to flowbound
+# 👋 Welcome to albin-bs.github.io
 
 ![Website](https://img.shields.io/badge/Website-flowbound.me-blue)
 ![GitHub followers](https://img.shields.io/github/followers/albin-bs?label=Followers&style=social)
