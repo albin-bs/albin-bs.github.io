@@ -7,6 +7,8 @@
 
 ![Website](https://img.shields.io/badge/Website-flowbound.me-blue)
 ![GitHub followers](https://img.shields.io/github/followers/albin-bs?label=Followers&style=social)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=albin-bs.albin-bs)
+
 
 ---
 
