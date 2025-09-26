@@ -3,55 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Albin Binu Sebastian - Portfolio</title>
+  <title>Albin Binu Sebastian - Welcome</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    /* Fullscreen video intro styles */
+    #intro-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    #intro-video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+    
+    #skip-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+    
+    #skip-button:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.05);
+    }
+    
+    #loading-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+      text-align: center;
+      z-index: 1001;
+    }
+    
+    .fade-out {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to albin-bs.github.io</h1>
-    <p>Hi! I'm <strong>Albin Binu Sebastian</strong> — a passionate developer and tech enthusiast.</p>
-  </header>
-
-  <section id="intro-video">
-    <video width="640" height="360" controls autoplay muted loop>
+  <div id="intro-container">
+    <video id="intro-video" autoplay muted playsinline>
       <source src="flowbound.me%20intro.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
-  </section>
+    <div id="loading-message">Loading video...</div>
+    <button id="skip-button" onclick="skipIntro()">Skip Intro</button>
+  </div>
 
-  <section id="projects">
-    <h2>Featured Projects</h2>
-    <ul>
-      <li><a href="#">Project One</a> - A cool project showcasing XYZ.</li>
-      <li><a href="#">Project Two</a> - Another amazing project using ABC tech.</li>
-    </ul>
-  </section>
-
-  <section id="skills">
-    <h2>Skills & Technologies</h2>
-    <table>
-      <thead>
-        <tr><th>Frontend</th><th>Backend</th><th>Tools</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>HTML, CSS, JS</td><td>Node.js, Python</td><td>Git, Docker</td></tr>
-        <tr><td>React, Vue.js</td><td>Express, Django</td><td>VS Code, Postman</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section id="contact">
-    <h2>Reach Me</h2>
-    <ul>
-      <li>Website: <a href="https://flowbound.me">flowbound.me</a></li>
-      <li>GitHub: <a href="https://github.com/albin-bs">@albin-bs</a></li>
-      <li>Twitter: <a href="https://twitter.com/yourhandle">@yourhandle</a></li>
-    </ul>
-  </section>
-
-  <footer>
-    <blockquote>“Code is like humor. When you have to explain it, it’s bad.” – Cory House</blockquote>
-  </footer>
+  <script>
+    const video = document.getElementById('intro-video');
+    const container = document.getElementById('intro-container');
+    const loadingMessage = document.getElementById('loading-message');
+    const skipButton = document.getElementById('skip-button');
+    
+    let videoStartTime = null;
+    let hasTransitioned = false;
+    
+    // Function to transition to details page
+    function goToDetails() {
+      if (hasTransitioned) return; // Prevent multiple transitions
+      hasTransitioned = true;
+      
+      console.log('Transitioning to details page');
+      container.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = 'details.html';
+      }, 1000);
+    }
+    
+    // Function to skip intro
+    function skipIntro() {
+      goToDetails();
+    }
+    
+    // Hide loading message when video can play
+    video.addEventListener('canplay', () => {
+      loadingMessage.classList.add('hidden');
+      console.log('Video can play');
+    });
+    
+    // Auto-transition when video ends (with minimum display time)
+    video.addEventListener('ended', () => {
+      console.log('Video ended event fired');
+      const currentTime = Date.now();
+      const minDisplayTime = 3000; // Minimum 3 seconds display
+      
+      if (videoStartTime && currentTime - videoStartTime < minDisplayTime) {
+        const remainingTime = minDisplayTime - (currentTime - videoStartTime);
+        console.log(`Waiting ${remainingTime}ms for minimum display time`);
+        setTimeout(goToDetails, remainingTime);
+      } else {
+        goToDetails();
+      }
+    });
+    
+    // Track when video actually starts playing
+    video.addEventListener('playing', () => {
+      console.log('Video started playing');
+      videoStartTime = Date.now();
+      loadingMessage.classList.add('hidden');
+    });
+    
+    // Handle video errors
+    video.addEventListener('error', (e) => {
+      console.log('Video error:', e);
+      loadingMessage.textContent = 'Video unavailable. Redirecting to main page...';
+      setTimeout(goToDetails, 3000);
+    });
+    
+    // Handle loading data
+    video.addEventListener('loadstart', () => {
+      console.log('Video loading started');
+    });
+    
+    video.addEventListener('loadeddata', () => {
+      console.log('Video data loaded');
+      console.log('Video duration:', video.duration);
+    });
+    
+    video.addEventListener('loadedmetadata', () => {
+      console.log('Video metadata loaded - Duration:', video.duration, 'seconds');
+    });
+    
+    // Start playing the video
+    video.play().then(() => {
+      console.log('Video play started successfully');
+    }).catch(e => {
+      console.log('Autoplay prevented:', e);
+      loadingMessage.textContent = 'Click anywhere to start the intro video';
+      
+      // Add click to play if autoplay is blocked
+      container.addEventListener('click', () => {
+        video.play().then(() => {
+          console.log('Video started playing after user interaction');
+          loadingMessage.classList.add('hidden');
+        }).catch(err => {
+          console.log('Play error:', err);
+          loadingMessage.textContent = 'Unable to play video. Redirecting...';
+          setTimeout(goToDetails, 2000);
+        });
+      }, { once: true });
+    });
+    
+    // Extended fallback timeout - if nothing happens in 15 seconds, redirect
+    setTimeout(() => {
+      if (!hasTransitioned && (video.paused || video.currentTime === 0)) {
+        console.log('Extended fallback timeout triggered');
+        goToDetails();
+      }
+    }, 15000);
+  </script>
 </body>
 </html>
-
