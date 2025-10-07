@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flowbound.me</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Fallback if style.css is missing */
+    body { margin: 0; font-family: Arial, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="splash-screen">
+    <div class="splash-content">
+      <h1>Welcome to Flowbound.me</h1>
+      <div class="loader"></div>
+    </div>
+  </div>
+  <div id="main-content" style="display:none;">
+    <!-- Your main website content goes here -->
+    <h2>Home Page</h2>
+    <p>This is your main website content.</p>
+  </div>
+  <script>
+    // Show splash for 3 seconds, then hide
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        document.getElementById('splash-screen').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
