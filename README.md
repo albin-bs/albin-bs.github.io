@@ -1,8 +1,3 @@
-<video width="640" height="360" controls autoplay muted loop>
-  <source src="flowbound.me%20intro.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
 # 👋 Welcome to albin-bs.github.io
 
 ![Website](https://img.shields.io/badge/Website-flowbound.me-blue)
