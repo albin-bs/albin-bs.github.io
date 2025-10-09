@@ -11,6 +11,11 @@
   </style>
 </head>
 <body>
+  <div id="intro-overlay">
+    <div class="intro-content">
+      <h1>Welcome to Flowbound.me</h1>
+    </div>
+  </div>
   <!-- Splash screen removed -->
   <div id="main-content">
     <!-- Your main website content goes here -->
@@ -20,6 +25,20 @@
   <!-- Splash screen script removed -->
   <!-- Typebot Floating Widget Embed -->
   <script>
+    // Fade out intro overlay after 2 seconds
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        var overlay = document.getElementById('intro-overlay');
+        if (overlay) {
+          overlay.classList.add('fade-out');
+          setTimeout(function() {
+            overlay.parentNode.removeChild(overlay);
+          }, 1200); // match CSS transition
+        }
+      }, 2000);
+    });
+
+    // Typebot widget
     const typebotInitScript = document.createElement("script");
     typebotInitScript.type = "module";
     typebotInitScript.innerHTML = `import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js'
